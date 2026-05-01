@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-namespace BulkyWeb.Models
+
+namespace BulkyWebRazor_Temp.Models
 {
     public class Category
     {
-
         public int CategoryId { get; set; }
         [Required]
         [DisplayName("Category Name")]
@@ -13,6 +13,5 @@ namespace BulkyWeb.Models
         [Range(1, 100, ErrorMessage = "Display Order must be between 1-100 ")]
         [DisplayName("Display Order")]
         public int DisplayOrder { get; set; }
-
     }
 }

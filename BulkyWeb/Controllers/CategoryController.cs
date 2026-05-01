@@ -15,7 +15,7 @@ namespace BulkyWeb.Controllers
             return View(categories);
         }
         [HttpGet]
-        public IActionResult  Create()
+        public IActionResult Create()
         {
             return View();
         }
@@ -50,13 +50,13 @@ namespace BulkyWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-            await _context.Categories.AddAsync(obj);
-            await _context.SaveChangesAsync();
-            TempData["success"] = "Category created successfully";
-            return RedirectToAction("Index","Category");
+                await _context.Categories.AddAsync(obj);
+                await _context.SaveChangesAsync();
+                TempData["success"] = "Category created successfully";
+                return RedirectToAction("Index", "Category");
             }
             return View();
-         
+
         }
         [HttpPost]
         public async Task<IActionResult> Edit(Category obj)
@@ -71,13 +71,13 @@ namespace BulkyWeb.Controllers
 
             }
             return View();
-         
+
         }
-        [HttpPost,ActionName("Delete")]
+        [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeletePost(int? categoryId)
         {
             Category? obj = await _context.Categories.FindAsync(categoryId);
-            if(obj == null)
+            if (obj == null)
             {
                 return NotFound();
             }
@@ -86,8 +86,8 @@ namespace BulkyWeb.Controllers
             TempData["success"] = "Category Deleted successfully";
 
             return RedirectToAction("Index");
-         
+
         }
-        
+
     }
 }
