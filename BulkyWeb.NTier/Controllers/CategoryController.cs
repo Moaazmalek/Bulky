@@ -1,15 +1,15 @@
-﻿using Bulky.DataAccess.Data;
+﻿using Bulky.DataAccess.Repository.IRepository;
 using Bulky.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace BulkyWeb.NTier.Controllers { 
-    public class CategoryController(ApplicationDbContext context) : Controller
+    public class CategoryController(ICategoryRepository context) : Controller
     {
-        private readonly ApplicationDbContext _context = context;
+        private readonly ICategoryRepository categoryRepo = context;
         public async Task<IActionResult> Index()
         {
-            var categories = await _context.Categories.ToListAsync();
+            var categories = await categoryRepo.GetAllAsync();
 
             return View(categories);
         }
@@ -24,7 +24,7 @@ namespace BulkyWeb.NTier.Controllers {
             if (categoryId is null || categoryId == 0)
                 return NotFound();
 
-            var category = await _context.Categories.FindAsync(categoryId);
+            var category = await categoryRepo.GetAsync(c => c.CategoryId == categoryId);
             if (category == null) return NotFound();
 
             return View(category);
@@ -35,7 +35,7 @@ namespace BulkyWeb.NTier.Controllers {
             if (categoryId is null || categoryId == 0)
                 return NotFound();
 
-            var category = await _context.Categories.FindAsync(categoryId);
+            var category = await categoryRepo.GetAsync(u => u.CategoryId == categoryId);
             if (category == null) return NotFound();
 
             return View(category);
@@ -49,8 +49,8 @@ namespace BulkyWeb.NTier.Controllers {
             }
             if (ModelState.IsValid)
             {
-                await _context.Categories.AddAsync(obj);
-                await _context.SaveChangesAsync();
+                await categoryRepo.AddAsync(obj);
+                await categoryRepo.SaveAsync();
                 TempData["success"] = "Category created successfully";
                 return RedirectToAction("Index", "Category");
             }
@@ -62,8 +62,8 @@ namespace BulkyWeb.NTier.Controllers {
         {
             if (ModelState.IsValid)
             {
-                _context.Categories.Update(obj);
-                await _context.SaveChangesAsync();
+               categoryRepo.Update(obj);
+                await categoryRepo.SaveAsync();
                 TempData["success"] = "Category updated successfully";
                 return RedirectToAction("Index");
 
@@ -75,13 +75,13 @@ namespace BulkyWeb.NTier.Controllers {
         [HttpPost, ActionName("Delete")]
         public async Task<IActionResult> DeletePost(int? categoryId)
         {
-            Category? obj = await _context.Categories.FindAsync(categoryId);
+            Category? obj = await categoryRepo.GetAsync(u => u.CategoryId == categoryId);
             if (obj == null)
             {
                 return NotFound();
             }
-            _context.Categories.Remove(obj);
-            await _context.SaveChangesAsync();
+            categoryRepo.Remove(obj);
+            await categoryRepo.SaveAsync();
             TempData["success"] = "Category Deleted successfully";
 
             return RedirectToAction("Index");
