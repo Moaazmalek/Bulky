@@ -1,8 +1,8 @@
 <Solution>
-  <Project Path="Bulky.DataAccess/Bulky.DataAccess.csproj" Id="940adb5b-a1da-4df6-8b4b-ce36a586f14f" />
-  <Project Path="Bulky.Models/Bulky.Models.csproj" Id="b151be27-2bdf-472a-bd2e-a78a5374d443" />
-  <Project Path="Bulky.Utility/Bulky.Utility.csproj" Id="caf7b94d-b147-4e77-86bd-f443a8e1625b" />
-  <Project Path="BulkyWeb.NTier/BulkyWeb.NTier.csproj" />
+  <Project Path="Bulky.DataAccess/BulkyBook.DataAccess.csproj" Id="940adb5b-a1da-4df6-8b4b-ce36a586f14f" />
+  <Project Path="Bulky.Models/BulkyBook.Models.csproj" Id="b151be27-2bdf-472a-bd2e-a78a5374d443" />
+  <Project Path="Bulky.Utility/BulkyBook.Utility.csproj" Id="caf7b94d-b147-4e77-86bd-f443a8e1625b" />
+  <Project Path="BulkyWeb.NTier/BulkyBookWeb.NTier.csproj" />
   <Project Path="BulkyWeb/BulkyWeb.csproj" Id="1941aff7-f184-4582-9e0d-d5c47b2ea65b" />
   <Project Path="BulkyWebRazor_Temp/BulkyWebRazor_Temp.csproj" Id="72351aa2-779a-44a9-a39a-5cc25e407095" />
   <Project Path="DI_Service_Lifetime/DI_Service_Lifetime.csproj" Id="0ee47977-d8dc-4791-858e-cef35e65b3f2" />

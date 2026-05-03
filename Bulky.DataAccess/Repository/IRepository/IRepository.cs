@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 
-namespace Bulky.DataAccess.Repository.IRepository
+namespace BulkyBook.DataAccess.Repository.IRepository
 {
     public interface IRepository<T> where T : class
     {

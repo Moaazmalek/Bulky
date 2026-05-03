@@ -1,9 +1,9 @@
-﻿using BulkyWeb.Data;
-using BulkyWeb.Models;
+﻿using BulkyBookWeb.Data;
+using BulkyBookWeb.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyWeb.Controllers
+namespace BulkyBookWeb.Controllers
 {
     public class CategoryController(ApplicationDbContext context) : Controller
     {
