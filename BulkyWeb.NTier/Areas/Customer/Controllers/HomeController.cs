@@ -2,8 +2,9 @@ using BulkyBook.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
-namespace BulkyBookWeb.NTier.Controllers
+namespace BulkyBookWeb.NTier.Areas.Customer.Controllers
 {
+    [Area("Customer")]
     public class HomeController : Controller
     {
         public IActionResult Index()

@@ -1,11 +1,15 @@
 ﻿using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 
-namespace BulkyBookWeb.NTier.Controllers { 
+namespace BulkyBookWeb.NTier.Areas.Admin.Controllers
+{
+    [Area("Admin")]
     public class CategoryController(IUnitOfWork unitOfWork) : Controller
     {
+      
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         public async Task<IActionResult> Index()
         {

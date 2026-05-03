@@ -17,6 +17,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
     
   </ItemGroup>
 
@@ -24,6 +25,10 @@
     <ProjectReference Include="..\Bulky.DataAccess\BulkyBook.DataAccess.csproj" />
     <ProjectReference Include="..\Bulky.Models\BulkyBook.Models.csproj" />
     <ProjectReference Include="..\Bulky.Utility\BulkyBook.Utility.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>
