@@ -20,6 +20,13 @@ namespace BulkyBook.DataAccess.Repository
         {
             IQueryable<T> query = DbSet;
             query = query.Where(filter);
+            if (!string.IsNullOrEmpty(includeProperties))
+            {
+                foreach(var includeProp in includeProperties.Split([','], StringSplitOptions.RemoveEmptyEntries))
+                {
+                    query = query.Include(includeProp);
+                }
+            }
 
             return await query.FirstOrDefaultAsync();
         }

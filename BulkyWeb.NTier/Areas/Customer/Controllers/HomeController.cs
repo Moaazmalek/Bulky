@@ -1,3 +1,4 @@
+using BulkyBook.DataAccess.Repository.IRepository;
 using BulkyBook.Models.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -5,11 +6,20 @@ using System.Diagnostics;
 namespace BulkyBookWeb.NTier.Areas.Customer.Controllers
 {
     [Area("Customer")]
-    public class HomeController : Controller
+    public class HomeController(IUnitOfWork unitOfWork) : Controller
     {
-        public IActionResult Index()
+        private readonly IUnitOfWork _unitOfWork = unitOfWork;
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IEnumerable<Product> productList =await  _unitOfWork.Product.GetAllAsync(includeProperties:"Category");
+
+            return View(productList);
+        }
+        public async Task<IActionResult> Details(int id)
+        {
+            Product product = await _unitOfWork.Product.GetAsync(p => p.Id == id, includeProperties: "Category");
+
+            return View(product);
         }
 
         public IActionResult Privacy()
