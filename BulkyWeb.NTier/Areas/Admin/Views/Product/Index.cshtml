@@ -18,7 +18,8 @@
                 </a>
             </div>
         </div>
-        <table class="table table-hover table-bordered table-striped">
+        <table id="tblData" class="table table-hover table-bordered table-striped">
+            <thead>
             <tr class="table-primary">
                 <th scope="col"> Title</th>
                 <th scope="col"> ISBN</th>
@@ -27,7 +28,8 @@
                 <th scope="col">  Category</th>
                 <th scope="col">Actions </th>
             </tr>
-            <tbody>
+            </thead>
+            @* <tbody>
                 @foreach (var product in Model)
                 {
                     <tr>
@@ -35,7 +37,7 @@
                         <td scope="col">@product.ISBN</td>
                         <td scope="col">@product.ListPrice</td>
                         <td scope="col">@product.Author</td>
-                        <td scope="col">Category</td>
+                        <td scope="col">@product.Category.Name</td>
                         <td>
                             <div class="w-75 btn-group" role="group">
                                 <a asp-controller="Product" asp-action="Upsert" asp-route-productId="@product.Id" class="btn btn-primary mx-2">
@@ -48,11 +50,13 @@
                         </td>
                     </tr>
                 }
-            </tbody>
+            </tbody> *@
         </table>
         </div>
     </div>
 <div class="container">
     
     </div>
-   
+   @section Scripts {
+       <script src="~/js/product.js"></script>
+   }

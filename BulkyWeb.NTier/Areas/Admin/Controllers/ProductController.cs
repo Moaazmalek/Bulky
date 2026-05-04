@@ -14,7 +14,7 @@ namespace BulkyBookWeb.NTier.Areas.Admin.Controllers
         private readonly IUnitOfWork _unitOfWork = unitOfWork;
         public async Task<IActionResult> Index()
         {
-            var products = await _unitOfWork.Product.GetAllAsync();
+            var products = await _unitOfWork.Product.GetAllAsync(includeProperties:"Category");
             return View(products);
         }
         [HttpGet]
@@ -54,17 +54,17 @@ namespace BulkyBookWeb.NTier.Areas.Admin.Controllers
 
         //    return View(product);
         //}
-        [HttpGet]
-        public async Task<IActionResult> Delete(int? productId)
-        {
-            if (productId is null || productId == 0)
-                return NotFound();
+        //[HttpGet]
+        //public async Task<IActionResult> Delete(int? productId)
+        //{
+        //    if (productId is null || productId == 0)
+        //        return NotFound();
 
-            var product = await _unitOfWork.Product.GetAsync(u => u.Id == productId);
-            if (product == null) return NotFound();
+        //    var product = await _unitOfWork.Product.GetAsync(u => u.Id == productId);
+        //    if (product == null) return NotFound();
 
-            return View(product);
-        }
+        //    return View(product);
+        //}
         [HttpPost]
         public async Task<IActionResult> Upsert(ProductViewModel productVM, IFormFile? file)
         {
@@ -122,21 +122,54 @@ namespace BulkyBookWeb.NTier.Areas.Admin.Controllers
         //    return View();
 
         //}
-        [HttpPost, ActionName("Delete")]
-        public async Task<IActionResult> DeletePost(int? productId)
+        //[HttpPost, ActionName("Delete")]
+        //public async Task<IActionResult> DeletePost(int? productId)
+        //{
+        //    Product? obj = await _unitOfWork.Product.GetAsync(u => u.Id == productId);
+        //    if (obj == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    _unitOfWork.Product.Remove(obj);
+        //    await _unitOfWork.Save();
+        //    TempData["success"] = "Product Deleted successfully";
+
+        //    return RedirectToAction("Index");
+
+        //}
+        #region API Calles 
+        [HttpGet]
+        public async Task<IActionResult> GetAll(int id)
         {
-            Product? obj = await _unitOfWork.Product.GetAsync(u => u.Id == productId);
-            if (obj == null)
-            {
-                return NotFound();
-            }
-            _unitOfWork.Product.Remove(obj);
-            await _unitOfWork.Save();
-            TempData["success"] = "Product Deleted successfully";
-
-            return RedirectToAction("Index");
-
+            var objProductList = await _unitOfWork.Product.GetAllAsync(includeProperties: "Category");
+            return Json(new { data = objProductList });
         }
+
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int? productId)
+        {
+            var productToBeDeleted = await _unitOfWork.Product.GetAsync(p => p.Id == productId);
+            if(productToBeDeleted == null)
+            {
+                return Json(new { success = false, message = "Error while deleting" });
+            }
+            //remove it's image
+            string wwwRootPath = _webHostEnvironment.WebRootPath;
+            var oldImagePath = Path.Combine(wwwRootPath, productToBeDeleted.ImageUrl.Trim('\\'));
+            if (System.IO.File.Exists(oldImagePath))
+            {
+                System.IO.File.Delete(oldImagePath);
+            }
+            _unitOfWork.Product.Remove(productToBeDeleted);
+           await _unitOfWork.Save();
+            return Json(new
+            {
+                success = true,
+                message = "Delete Successful"
+            });
+        }
+        #endregion
+
 
     }
 }
